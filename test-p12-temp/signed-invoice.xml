@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<factura Id="comprobante" version="1.1.0">
+  <infoTributaria>
+    <ambiente>1</ambiente>
+    <tipoEmision>1</tipoEmision>
+    <razonSocial>Test Company SA</razonSocial>
+    <nombreComercial>Test Company</nombreComercial>
+    <ruc>1234567890001</ruc>
+    <claveAcceso>1010202501123456789000110010010000000015555555512</claveAcceso>
+    <codDoc>01</codDoc>
+    <estab>001</estab>
+    <ptoEmi>001</ptoEmi>
+    <secuencial>000000001</secuencial>
+    <dirMatriz>Quito, Ecuador</dirMatriz>
+  </infoTributaria>
+  <infoFactura>
+    <fechaEmision>10/10/2025</fechaEmision>
+    <dirEstablecimiento>Quito Norte</dirEstablecimiento>
+    <tipoIdentificacionComprador>05</tipoIdentificacionComprador>
+    <razonSocialComprador>Cliente Test</razonSocialComprador>
+    <identificacionComprador>0987654321</identificacionComprador>
+    <totalSinImpuestos>100.00</totalSinImpuestos>
+    <totalDescuento>0.00</totalDescuento>
+    <totalConImpuestos>
+      <totalImpuesto>
+        <codigo>2</codigo>
+        <codigoPorcentaje>4</codigoPorcentaje>
+        <baseImponible>100.00</baseImponible>
+        <valor>15.00</valor>
+      </totalImpuesto>
+    </totalConImpuestos>
+    <propina>0.00</propina>
+    <importeTotal>115.00</importeTotal>
+    <moneda>USD</moneda>
+  </infoFactura>
+  <detalles>
+    <detalle>
+      <descripcion>Producto de prueba</descripcion>
+      <cantidad>1.00</cantidad>
+      <precioUnitario>100.00</precioUnitario>
+      <descuento>0.00</descuento>
+      <precioTotalSinImpuesto>100.00</precioTotalSinImpuesto>
+      <impuestos>
+        <impuesto>
+          <codigo>2</codigo>
+          <codigoPorcentaje>4</codigoPorcentaje>
+          <tarifa>15.00</tarifa>
+          <baseImponible>100.00</baseImponible>
+          <valor>15.00</valor>
+        </impuesto>
+      </impuestos>
+    </detalle>
+  </detalles>
+<ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" Id="Signature-44314790-0398-4f58-9560-d1a7cef7559c"><ds:SignedInfo Id="SignedInfo-1b4dd303-a72f-486b-a127-a7ef17fc8ed7"><ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><ds:Reference Id="DocumentRef-aeeef363-9c6e-4292-9ca0-7ddaded93c09" URI="#comprobante"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><ds:DigestValue>o2TCQy7mkeBpm8hVI8+H+UDUpNY=</ds:DigestValue></ds:Reference><ds:Reference Id="SignedPropertiesRef-219d9757-1840-4fa6-b254-5f523b9710e9" Type="http://uri.etsi.org/01903#SignedProperties" URI="#SignedProperties-4830311c-b8b1-485c-abdc-7d89080aac11"><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><ds:DigestValue>VbCaW8gwACrfibJpT5Yopl15lus=</ds:DigestValue></ds:Reference><ds:Reference Id="CertificateRef-f0bd38cb-7a02-4174-aa77-695994c42c83" URI="#Certificate-4f04d573-9b88-4e4b-8c4c-380c70916265"><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><ds:DigestValue>PFnrGeU3W45Dok7PQBRtuQPsI0I=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue Id="SignatureValue-1fb81853-5598-4778-9703-95203cfe7dd4">E6w/6/cMhhrIsg29fM7qg5m6EJ8gPUn+rnOE9h4rAM8oL1fTvUEaQD0A2EBdBB67glQ1n0r7kkE1ZhU2yTAHtde+V4Wtp76SqYSoBbTQQ7Fe/Sl4FP9M5FA4yXc2Aq9syZafZLWD4wtUUA4PyUC8+Hhcwu9qz5IDqpYk1Cax2S7WqE/gg3aGmAm/d2HJsVNIDJf/sutfmo6o7Lr6qUdJP/9yEfkgU+rKwU7BfFMbIHZvj0G7cVI41G+Rvc2VJLrSceD2GqW+EdElrpySIzC+TReyMBt4hK+utv+IKgCdV/9jH+QqLv94qBmHmtSUquhhZB1BDZ9d3pWZMnDesveBPw==</ds:SignatureValue><ds:KeyInfo Id="Certificate-4f04d573-9b88-4e4b-8c4c-380c70916265"><ds:X509Data><ds:X509Certificate>MIIECzCCAvOgAwIBAgIUY07jF/e0onuPbGhK0XpmcJGezKEwDQYJKoZIhvcNAQELBQAwgZQxCzAJBgNVBAYTAkVDMRIwEAYDVQQIDAlQaWNoaW5jaGExDjAMBgNVBAcMBVF1aXRvMREwDwYDVQQKDAhUZXN0IE9yZzESMBAGA1UECwwJVGVzdCBVbml0MRkwFwYDVQQDDBBUZXN0IENlcnRpZmljYXRlMR8wHQYJKoZIhvcNAQkBFhB0ZXN0QGV4YW1wbGUuY29tMB4XDTI1MTAxMDA2MTYwMFoXDTM1MTAwODA2MTYwMFowgZQxCzAJBgNVBAYTAkVDMRIwEAYDVQQIDAlQaWNoaW5jaGExDjAMBgNVBAcMBVF1aXRvMREwDwYDVQQKDAhUZXN0IE9yZzESMBAGA1UECwwJVGVzdCBVbml0MRkwFwYDVQQDDBBUZXN0IENlcnRpZmljYXRlMR8wHQYJKoZIhvcNAQkBFhB0ZXN0QGV4YW1wbGUuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0ImsVI2aZSgpi1NCu3aKGtJ45pG52CR8lTLZwWOF8RrGwv7qx8myhiffDaKG/mUzWE/tyScMDYm9qIQIxu/D5cF6+SNuuqBOfLl8rFBvPI2eaBiHiv6CtomObSBXCI9kqyMuZwVOQSgDIct0Jo7z62Xz4vFlapkuBt/Ye+2wPC4YWDIIP/wvQq7gROod7D5E32XnrwbuSeCGuHMJOBtfNgWOYA6A1gZYQ5JduOzmeQl+N085oBdNQxGuu8BBdwd8bPeBs/fgRRmFECggf4FQ6pjU9Hu3XLFPb6LusWfRHTV3Tg8RfA2yttpSwapVKDbAKPMCM0L2pCgI+gnA3b3OmQIDAQABo1MwUTAdBgNVHQ4EFgQUMkG/MvGq70Zmh7Zj22Ima834bB0wHwYDVR0jBBgwFoAUMkG/MvGq70Zmh7Zj22Ima834bB0wDwYDVR0TAQH/BAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAsUPxVh7DodoT/eEzlNRnMm36+ZDvjcIY6OHVOQlkFH86zFPFxhknFfPR1ef+9uc2Yu4eHl9qPO3RLw3qz86VkmNrAjO210mpl5ESELi4G7WBHKNU7tdwQipgmwKz+y6oemJnxeGKw+WR5kwlagrJkx00u0JDigSEVHo47oCflfxlkFjHoM04tIxuOOpLByb0U5er0AWxcV4MlXRafmAP0U6Z0oE5MD26Ike9WIUcNlmftoPFxAWsLw64PsJ38GnMWdLknKlnbp9AimPY80Uv4jZmW7+I+0T7rtaznxy4iCD1uNd5mTDovjlNyDp/5PhC0kC7lG9EeQI+27kH0U39Jw==</ds:X509Certificate></ds:X509Data><ds:KeyValue><ds:RSAKeyValue><ds:Modulus>ZVM=</ds:Modulus><ds:Exponent>JjJUVmAJU2RmmHmHNjlSZzJxFHMgJwkAlnJAZIYhA0ZgdiSFKTAUFHCJGEmGeBA4dxCRM4kBWRIpBDcpVwknM4klM2NpMAE1eVSRlYWHN1N5gBOVJHkhSEVRdgdGRGJ2hDdJaRRkNzMygwNlmCYQZSAXNXcINRKTEYKTCAmXESmXSERAiIkChDcWUTAhlmcnWYh1MXMEBgYGeUJDUEZ2CVE5FQVmdFBlJRl2BXQmYnIpVgICZ1U1h1aWdlNBNjZxGYdgBlFHNpZTSHGSV4BnYYlEMUBChjJ1QiYIAZlQFVCAJFJDQ3Yzg5YzmJIjlwUyAEB3kWQWmAkkMWB0RGlFlzZFlihEmFhpAHOAMJdgYlOSJUliIjWImUmTVlUGZ2NGGZA5UUk2VlIpeQZIJnVQQhcQFIA=</ds:Exponent></ds:RSAKeyValue></ds:KeyValue></ds:KeyInfo><ds:Object Id="SignatureObject-163c41f8-a275-4530-baa5-c57238921a47"><xades:QualifyingProperties xmlns:xades="http://uri.etsi.org/01903/v1.3.2#" Target="#Signature-44314790-0398-4f58-9560-d1a7cef7559c"><xades:SignedProperties Id="SignedProperties-4830311c-b8b1-485c-abdc-7d89080aac11"><xades:SignedSignatureProperties><xades:SigningTime>2025-10-10T01:18:56.645-05:00</xades:SigningTime><xades:SigningCertificate><xades:Cert><xades:CertDigest><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><ds:DigestValue>lp5dI4AWkCWm6BU6qnjVNDtB9lA=</ds:DigestValue></xades:CertDigest><xades:IssuerSerial><ds:X509IssuerName>EMAILADDRESS=test@example.com,CN=Test Certificate,OU=Test Unit,O=Test Org,L=Quito,ST=Pichincha,C=EC</ds:X509IssuerName><ds:X509SerialNumber>566949327081703674194912156514806223149998197921</ds:X509SerialNumber></xades:IssuerSerial></xades:Cert></xades:SigningCertificate></xades:SignedSignatureProperties><xades:SignedDataObjectProperties><xades:DataObjectFormat ObjectReference="#DocumentRef-aeeef363-9c6e-4292-9ca0-7ddaded93c09"><xades:Description>Firma digital</xades:Description><xades:MimeType>text/xml</xades:MimeType><xades:Encoding>UTF-8</xades:Encoding></xades:DataObjectFormat></xades:SignedDataObjectProperties></xades:SignedProperties></xades:QualifyingProperties></ds:Object></ds:Signature></factura>

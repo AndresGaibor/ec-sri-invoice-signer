@@ -220,3 +220,30 @@ Corre la prueba:
 ```bash
 npm run test:sri:withholding-certificate
 ```
+
+## Benchmark de firma
+
+El benchmark mide la linea base de la firma de facturas para lotes de 100 y 1,000 documentos. El comando predeterminado realiza una sola medicion por lote, sin warmup. Usa los fixtures de prueba, no realiza solicitudes al SRI y no escribe XML firmados.
+
+```bash
+npm run benchmark:signing
+```
+
+Para una salida estructurada:
+
+```bash
+npm run benchmark:signing -- --json
+```
+
+El comando compila el proyecto y ejecuta Node.js con `--expose-gc`. La salida informa version de Node.js, plataforma, arquitectura, mediana, p95, milisegundos por documento, documentos por segundo y memoria. Compare resultados solamente en entornos equivalentes.
+
+Para repetir las mediciones desde codigo, use las opciones programaticas de `runSigningBenchmark`:
+
+```ts
+import { runSigningBenchmark } from './benchmark/signing';
+
+const reporte = runSigningBenchmark({
+  iterations: 5,
+  warmupIterations: 1,
+});
+```
