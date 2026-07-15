@@ -1,6 +1,7 @@
 import { c14nCanonicalize } from "../canonicalization/c14n";
 import { XmlProperties } from "../utils/constants";
 import { extractPrivateKeyAndCertificateFromPkcs12, extractPrivateKeyData, extractX509Data, getHash, sign } from "../utils/cryptography";
+import { PreparedSigner } from "../utils/cryptography-native";
 import * as Utils from "../utils/utils";
 import { validateDocumentType, validateXmlFeatures } from "../utils/xml";
 import { buildKeyInfoTag } from "./templates/keyInfo";
@@ -10,6 +11,7 @@ import { buildSignedPropertiesTag } from "./templates/signedProperties";
 
 export type signXmlOptions = Partial<{
   pkcs12Password: string;
+  preparedSigner: PreparedSigner;
 }>;
 
 const insertSignatureIntoInvoiceXml = (invoiceXml: string, signatureXml: string, rootTagName: string) => {
@@ -19,9 +21,41 @@ const insertSignatureIntoInvoiceXml = (invoiceXml: string, signatureXml: string,
 
 export const signDocumentXml = (docXml: string, pkcs12Data: string | Buffer, rootTagName: string, options?: signXmlOptions) => {
   const signingTime = Utils.getDate();
-  const { privateKey, certificate } = extractPrivateKeyAndCertificateFromPkcs12(pkcs12Data, options?.pkcs12Password);
-  const { exponent: certificateExponent, modulus: certificateModulus } = extractPrivateKeyData(privateKey);
-  const { issuerName: x509IssuerName, serialNumber: x509SerialNumber, content: certificateContent, contentHash: x509Hash } = extractX509Data(certificate);
+
+  let certificateExponent: string;
+  let certificateModulus: string;
+  let x509IssuerName: string;
+  let x509SerialNumber: string;
+  let certificateContent: string;
+  let x509Hash: string;
+  let signFn: (data: string) => string;
+  let getHashFn: (data: string) => string;
+
+  if (options?.preparedSigner) {
+    const ps = options.preparedSigner;
+    const keyData = ps.extractPrivateKeyData();
+    certificateExponent = keyData.exponent;
+    certificateModulus = keyData.modulus;
+    const x509Data = ps.extractX509Data();
+    x509IssuerName = x509Data.issuerName;
+    x509SerialNumber = x509Data.serialNumber;
+    certificateContent = x509Data.content;
+    x509Hash = x509Data.contentHash;
+    signFn = ps.sign;
+    getHashFn = ps.getHash;
+  } else {
+    const { privateKey, certificate } = extractPrivateKeyAndCertificateFromPkcs12(pkcs12Data, options?.pkcs12Password);
+    const keyData = extractPrivateKeyData(privateKey);
+    certificateExponent = keyData.exponent;
+    certificateModulus = keyData.modulus;
+    const x509Data = extractX509Data(certificate);
+    x509IssuerName = x509Data.issuerName;
+    x509SerialNumber = x509Data.serialNumber;
+    certificateContent = x509Data.content;
+    x509Hash = x509Data.contentHash;
+    signFn = (data: string) => sign(data, privateKey);
+    getHashFn = getHash;
+  }
 
   validateDocumentType(docXml);
   validateXmlFeatures(docXml);
@@ -55,9 +89,9 @@ export const signDocumentXml = (docXml: string, pkcs12Data: string | Buffer, roo
     x509SerialNumber
   });
 
-  const docHash = getHash(c14nCanonicalize(docXml));
-  const signedPropertiesTagHash = getHash(c14nCanonicalize(signedPropertiesTag, { inheritedNamespaces: [{ prefix: 'xades', uri: XmlProperties.namespaces.xades }, { prefix: 'ds', uri: XmlProperties.namespaces.ds }] }));
-  const keyInfoTagHash = getHash(c14nCanonicalize(keyInfoTag, { inheritedNamespaces: [{ prefix: 'ds', uri: XmlProperties.namespaces.ds }] }));
+  const docHash = getHashFn(c14nCanonicalize(docXml));
+  const signedPropertiesTagHash = getHashFn(c14nCanonicalize(signedPropertiesTag, { inheritedNamespaces: [{ prefix: 'xades', uri: XmlProperties.namespaces.xades }, { prefix: 'ds', uri: XmlProperties.namespaces.ds }] }));
+  const keyInfoTagHash = getHashFn(c14nCanonicalize(keyInfoTag, { inheritedNamespaces: [{ prefix: 'ds', uri: XmlProperties.namespaces.ds }] }));
 
   const signedInfoTag = buildSignedInfoTag({
     invoiceHash: docHash,
@@ -72,7 +106,7 @@ export const signDocumentXml = (docXml: string, pkcs12Data: string | Buffer, roo
     signedPropertiesTagId
   });
 
-  const signedSignedInfoTag = sign(c14nCanonicalize(signedInfoTag, { inheritedNamespaces: [{ prefix: 'ds', uri: XmlProperties.namespaces.ds }] }), privateKey);
+  const signedSignedInfoTag = signFn(c14nCanonicalize(signedInfoTag, { inheritedNamespaces: [{ prefix: 'ds', uri: XmlProperties.namespaces.ds }] }));
 
   const signatureTag = buildSignatureTag({
     keyInfoTag,
